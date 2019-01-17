@@ -94,7 +94,7 @@ int main()
 
     if(visited[d]==0)
     {
-        cout<<"No path"<<endl;
+        pf("No path\n");
     }
     else
     {
@@ -103,7 +103,7 @@ int main()
             v.push_back(i);
         }
         reverse(v.begin(),v.end());
-        printf("Path : ");
+        pf("Path : ");
         for(auto x : v)
             cout<<x<<" ";
     }
