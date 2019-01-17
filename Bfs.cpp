@@ -2,7 +2,7 @@
 using namespace std;
 
 vector<int> vec [100000];
-int visited[1000000];
+int visited[100000];
 
 void BFS(int s)
 {
