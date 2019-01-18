@@ -98,7 +98,7 @@ void BFS(int row,int col,int x,int y)
 
             if(isvalid(row,col,xx,yy))
             {
-                level[xx][yy]=min(level[a][b]+1,level[xx][yy]);
+                level[xx][yy]=level[a][b]+1;
                 visited[xx][yy]=1;
                 q.push(pii(xx,yy));
             }
@@ -125,17 +125,17 @@ int main()
                     x1=i;
                     y1=j;
                 }
-                if(s[i][j]=='b')
+                else if(s[i][j]=='b')
                 {
                     x2=i;
                     y2=j;
                 }
-                if(s[i][j]=='c')
+                else if(s[i][j]=='c')
                 {
                     x3=i;
                     y3=j;
                 }
-                if(s[i][j]=='h')
+                else if(s[i][j]=='h')
                 {
                     x4=i;
                     y4=j;
@@ -154,7 +154,6 @@ int main()
 }
 
 /*
-sample example: http://lightoj.com/volume_showproblem.php?problem=1238
 2
 
 6 8
