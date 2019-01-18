@@ -154,6 +154,7 @@ int main()
 }
 
 /*
+sample example: http://lightoj.com/volume_showproblem.php?problem=1238
 2
 
 6 8
