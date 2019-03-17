@@ -17,7 +17,7 @@ struct node
     }
     bool operator <(const node &p) const
     {
-        return w>p.w;///sort in descending order
+        return w<p.w;///sort in descending order
     }
 };
 
