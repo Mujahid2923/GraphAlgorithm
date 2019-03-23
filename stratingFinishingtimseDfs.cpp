@@ -10,7 +10,7 @@ vector<int>adj[1000];
 int start[1000];
 int finish[1000];
 int visited[1000];
-static int Time;
+int Time=0;
 
 void dfs(int s)
 {
