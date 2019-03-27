@@ -21,8 +21,8 @@ void checkCycle(int u)
             ok=1;
             return;
         }
-        visited[v]=2;
     }
+    visited[v]=2;
 }
 
 int main()
