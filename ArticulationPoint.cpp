@@ -88,7 +88,7 @@ void FindArticulationPoint(int u)
         }
         else if(v != parent[u])
         {
-            low[u]=min(low[u],d[v]);
+            low[u]=min(low[u],d[v]);///if there is a backedge
         }
     }
 }
