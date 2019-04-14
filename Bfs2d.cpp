@@ -76,7 +76,7 @@ void BFS(int row,int col,int x,int y)
     }
 
     queue<pii>q;
-    q.push(pii(x,y));
+    q.push(mp(x,y));
     level[x][y]=0;
     visited[x][y]=1;
 
@@ -100,7 +100,7 @@ void BFS(int row,int col,int x,int y)
             {
                 level[xx][yy]=level[a][b]+1;
                 visited[xx][yy]=1;
-                q.push(pii(xx,yy));
+                q.push(mp(xx,yy));
             }
         }
 
