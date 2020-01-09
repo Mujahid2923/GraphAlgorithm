@@ -5,41 +5,60 @@
 ///...................................*****.................................................///
 
 #include<bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
+using namespace __gnu_pbds;
+template<typename T> using orderset = tree<T,null_type,less<T>,rb_tree_tag,tree_order_statistics_node_update>;
 
-#define           CIN              ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
-#define           ll               long long int
-#define           ull              unsigned long long int
-#define           pii              pair < int, int>
-#define           pll              pair < ll, ll>
-#define           MOD              1000000007
-#define           vi               vector<int>
-#define           vl               vector<ll>
-#define           pb               push_back
-#define           sc               scanf
-#define           pf               printf
-#define         scin(x)            scanf("%d",&(x))
-#define        scin2(x,y)          scanf("%d %d",&(x),&(y))
-#define        scin3(x,y,z)        scanf("%d %d %d",&(x),&(y),&(z))
-#define         scln(x)            scanf("%lld",&(x))
-#define        scln2(x,y)          scanf("%lld %lld",&(x),&(y))
-#define       min3(a,b,c)          min(a,min(b,c))
-#define       min4(a,b,c,d)        min(d,min(a,min(b,c)))
-#define       max3(a,b,c)          max(a,max(b,c))
-#define       max4(a,b,c,d)        max(d,max(a,max(b,c)))
-#define         ms(a,b)            memset(a,b,sizeof(a))
-#define           mp               make_pair
-#define       gcd(a, b)            __gcd(a,b)
-#define       lcm(a, b)            ((a)*(b)/gcd(a,b))
-#define         input              freopen("input.txt","rt", stdin)
-#define         output             freopen("output.txt","wt", stdout)
-#define           PI               2*acos(0.0)
-#define     rep( i , a , b )       for( i=a ; i<b ; i++)
-#define     rev( i , a , b )       for( i=a ; i>=b ; i--)
-#define     repx( i ,a,b, x)       for( i=a ; i<b ; i+=x)
-#define       CASEL(t)             printf("Case %d:\n",t)
-#define     RUN_CASE(t,T)          for(__typeof(t) t=1;t<=T;t++)
-#define        zero(a)             memset(a,0,sizeof a)
+#define          CIN                    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
+#define          ll                     long long int
+#define          ld                     long double
+#define          ull                    unsigned long long int
+#define          pii                    pair < int, int>
+#define          pll                    pair < ll, ll>
+#define          MOD                    1000000007
+#define          vi                     vector<int>
+#define          vl                     vector<ll>
+#define          pb                     push_back
+#define          sc                     scanf
+#define          pf                     printf
+#define          scin(x)                scanf("%d",&(x))
+#define          scin2(x,y)             scanf("%d %d",&(x),&(y))
+#define          scln(x)                scanf("%lld",&(x))
+#define          scln2(x,y)             scanf("%lld %lld",&(x),&(y))
+#define          min3(a,b,c)            min(a,min(b,c))
+#define          min4(a,b,c,d)          min(d,min(a,min(b,c)))
+#define          max3(a,b,c)            max(a,max(b,c))
+#define          max4(a,b,c,d)          max(d,max(a,max(b,c)))
+#define          ms(a,b)                memset(a,b,sizeof(a))
+#define          mp                     make_pair
+#define          gcd(a, b)              __gcd(a,b)
+#define          lcm(a, b)              ((a)*(b)/gcd(a,b))
+#define          input                  freopen("input.txt","rt", stdin)
+#define          output                 freopen("output.txt","wt", stdout)
+#define          PI                     acos(-1.0)
+#define          zero(a)                memset(a,0,sizeof a)
+#define          all(v)                 v.begin(),v.end()
+#define          Max(v)                 *max_element(all(v))
+#define          Min(v)                 *min_element(all(v))
+#define          Upper(c,x)             (upper_bound(c.begin(),c.end(),x)-c.begin())
+#define          Lower(c,x)             (lower_bound(c.begin(),c.end(),x)-c.begin())
+#define          Unique(X)              (X).erase(unique(all(X)),(X).end())
+#define          no                     cout << "NO" << endl ;
+#define          yes                    cout << "YES" << endl ;
+///#define          endl                   '\n'
+
+///priority_queue<int,vector<int>,greater<int> >pq;
+///string str = "abcdefghijklmnopqrstuvwxyz";
+///string s2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" ;
+///string s = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" ;
+///string s = std::bitset<64>(n).to_string();
+///---------------Order set-------------------
+///template<typename T> using orderset =tree<T,null_type,less<T>,rb_tree_tag,tree_order_statistics_node_update>;
+///#include <ext/pb_ds/assoc_container.hpp>
+///using namespace __gnu_pbds;
+///*os.find_by_order(index) os.order_of_key(value)
 
 ///--------------Graph Moves--------------------------------------
 ///const int fx[] = {+1,-1,+0,+0};
@@ -49,53 +68,55 @@ using namespace std;
 ///const int fx[] = {-2,-2,-1,-1,+1,+1,+2,+2}; ///knight's move
 ///const int fy[] = {-1,+1,-2,+2,-2,+2,-1,+1}; ///knight's move
 ///---------------------------------------------------------------
+///sort( all( v ) ) ;
 
-int node,edge;
-int parent[100005];
+ll node, edge ;
+ll parent[ 100005 ] ;
 
 struct Node
 {
-    int a,b,w;
-    Node(int x,int y,int z)
+    ll node1, node2, cost ;
+    Node( ll x, ll y, ll z )
     {
-        a=x;
-        b=y;
-        w=z;
+        node1 = x ;
+        node2 = y ;
+        cost = z;
     }
-    bool operator < (const Node& p) const
+
+    bool operator < ( const Node& p ) const
     {
-        return w<p.w;
+        return cost < p.cost ; //choto theke boro
     }
 };
 
-vector<Node>vec;
+vector< Node > vec ;
 
-int Find(int r)
+ll Find( ll r )
 {
-    if(r==parent[r])
-        return r;
+    if( r == parent[ r ] )
+        return r ;
     else
-        return parent[r]=Find(parent[r]);
+        return parent[ r ] = Find( parent[ r ] ) ;
 }
 
-int mst()
+ll kruskal()
 {
-    for(int i=1; i<=node; i++)
+    for( int i = 1 ; i <= node ; i ++ )
     {
-        parent[i]=i;
+        parent[ i ] = i ;
     }
 
-    int cnt=0,weight=0;
-    for(int i=0; i<edge; i++)
+    ll cnt = 0, weight = 0 ;
+    for( int i = 0 ; i < edge ; i ++ )
     {
-        int u=Find(vec[i].a);
-        int v=Find(vec[i].b);
-        if(u!=v)
+        ll u = Find( vec[ i ].node1 ) ;
+        ll v = Find( vec[ i ].node2 ) ;
+        if( u != v )
         {
-            parent[u]=v;
-            cnt++;
-            weight+=vec[i].w;
-            if(cnt==node-1)
+            parent[ u ] = v ;
+            cnt ++ ;
+            weight += vec[ i ].cost ;
+            if( cnt == node - 1 )
                 break;
         }
     }
@@ -104,15 +125,16 @@ int mst()
 
 int main()
 {
-    int a,b,w;
-    scin2(node,edge);
-    for(int i=0; i<edge; i++)
+    ll a, b, c ;
+    cin >> node >> edge ;
+    for( int i = 0 ; i < edge ; i ++ )
     {
-        scin3(a,b,w);
-        vec.pb(Node(a,b,w));
+        cin >> a >> b >> c ;
+        vec.pb( Node( a, b, c ) ) ;
     }
-    sort(vec.begin(),vec.end());
-    cout<<mst()<<endl;
+
+    sort( all( vec ) );
+    cout<< kruskal() << endl ;
     return 0;
 }
 
@@ -140,3 +162,4 @@ Output:16
 
 Output:17
 */
+
