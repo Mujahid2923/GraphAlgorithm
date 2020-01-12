@@ -51,79 +51,80 @@ using namespace std;
 ///---------------------------------------------------------------
 
 
-vi adj[1000];
-vi radj[1000];
-vi result[1000];
-int visited[1000];
-int color[1000];
-stack<int>st;
+vi adj[ 1000 ] ;
+vi radj[ 1000 ] ;
+vi result[ 1000 ] ;
+int visited1[ 1000 ] ;
+int visited2[ 1000 ] ;
+stack< int > st ;
 
-void dfs(int u)
+void dfs( int u )
 {
-    color[u]=1;
-    for(int i=0; i<adj[u].size(); i++)
+    visited1[ u ] = 1 ;
+    for( int i = 0 ; i < adj[ u ].size() ; i ++ )
     {
-        int v=adj[u][i];
-        if(color[v]==0)
+        int v = adj[ u ][ i ] ;
+        if( visited1[ v ] == 0 )
+        {
             dfs(v);
+        }
     }
-    st.push(u);
+    st.push( u ) ;
 }
 
-void dfs2(int u,int mark)
+void dfs2( int u,int mark )
 {
-    result[mark].push_back(u);
-    visited[u]=1;
-    for(int i=0; i<radj[u].size(); i++)
+    result[ mark ].pb( u ) ;
+    visited2[ u ] = 1 ;
+    for( int i = 0 ; i < radj[ u ].size() ; i ++ )
     {
-        int v=radj[u][i];
-        if(visited[v]==0)
+        int v = radj[ u ][ i ] ;
+        if( visited2[ v ] == 0 )
         {
-            dfs2(v, mark);
+            dfs2( v, mark ) ;
         }
     }
 }
 
 int main()
 {
-    int node,edge,a,b;
-    scin2(node,edge);
-    for(int i=0; i<edge; i++)
+    int node, edge, a, b ;
+    cin >> node >> edge ;
+    for( int i = 0 ; i < edge ; i ++ )
     {
-        scin2(a,b);
-        adj[a].pb(b);
-        radj[b].pb(a);
+        cin >> a >> b ;
+        adj[ a ].pb( b ) ;
+        radj[ b ].pb( a ) ;
     }
 
-    zero(color);
-    for(int i=1; i<=node; i++)
+    for( int i = 1 ; i <= node ; i ++ )
     {
-        if(color[i]==0)
+        if( visited1[ i ] == 0 )
         {
-            dfs(i);
+            dfs( i ) ;
         }
     }
 
-    zero(visited);
-    int mark=0;
-    while(!st.empty())
+    int mark = 0 ;
+    while( !st.empty() )
     {
-        int u=st.top();
-        st.pop();
-        if(visited[u]==0)
+        int u = st.top() ;
+        st.pop() ;
+        if( visited2[ u ] == 0 )
         {
-            mark+=1;
-            dfs2(u,mark);
+            mark ++ ;
+            dfs2( u, mark ) ;
         }
     }
-    cout<<"There are "<<mark<<" component"<<endl;
-    for(int i=1; i<=mark; i++)
+
+    cout << "There are " << mark << " component" << endl;
+    for( int i = 1 ; i <= mark ; i ++ )
     {
-        for(int j=0; j<result[i].size(); j++)
+        for( int j = 0 ; j < result[ i ].size() ; j ++ )
         {
-            cout<<result[i][j]<<" ";
+            cout << result[ i ][ j ] << " " ;
         }
-        cout<<endl;
+        cout << endl ;
     }
     return 0;
 }
@@ -138,4 +139,10 @@ int main()
 5 6
 6 7
 7 5
+
+There are 3 component
+1 3 2
+4
+5 7 6
+
 */
