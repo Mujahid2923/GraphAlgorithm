@@ -50,80 +50,79 @@ using namespace std;
 ///const int fy[] = {-1,+1,-2,+2,-2,+2,-1,+1}; ///knight's move
 ///---------------------------------------------------------------
 
-int node,edge,Time=0;
-vi adj[200005];
-int articulationPoint[200005];
-int visited[200005];
-int parent[200005];
-int d[200005];
-int low[200005];
+int node, edge, Time = 0 ;
+vector< int > adj[ 200005 ] ;
+int articulationPoint[ 200005 ] ;
+int visited[ 200005 ] ;
+int parent[ 200005 ] ;
+int d[ 200005 ] ;
+int low[ 200005 ] ;
 
 
-void FindArticulationPoint(int u)
+void FindArticulationPoint( int u )
 {
 
-    d[u]=low[u]=++Time;
-    visited[u]=1;
-    int childcount=0;
+    d[ u ] = low[ u ] = ++ Time ;
+    visited[ u ] = 1 ;
+    int childcount = 0 ;
 
-    for(int i=0; i<adj[u].size(); i++)
+    for( int i = 0 ; i < adj[ u ].size() ; i ++ )
     {
-        int v=adj[u][i];
-        if(visited[v]==0)
+        int v = adj[ u ][ i ] ;
+        if( visited[ v ] == 0 )
         {
-            childcount++;
-            parent[v]=u;
-            FindArticulationPoint(v);
-            low[u]=min(low[u],low[v]);
+            childcount ++ ;
+            parent[ v ] = u ;
+            FindArticulationPoint( v ) ;
+            low[ u ] = min( low[ u ], low[ v ] ) ;
 
-            if(childcount>1 && parent[u]==-1)
+            if( childcount > 1 && parent[ u ] == -1 )
             {
-                articulationPoint[u]=1;
+                articulationPoint[ u ] = 1 ;
             }
-            else if(d[u]<=low[v] && parent[u]!=-1)
+            else if( d[ u ] <= low[ v ] && parent[ u ] != -1 )///remove equal for bridge
             {
-                articulationPoint[u]=1;
+                articulationPoint[ u ] = 1 ;
             }
-
         }
-        else if(v != parent[u])
+        else if( v != parent[ u ] )
         {
-            low[u]=min(low[u],d[v]);///if there is a backedge
+            low[ u ] = min( low[ u ],d[ v ] ) ; ///That means a child , backEdge
         }
     }
 }
 
 int main()
 {
-    int a,b;
-    cin>>node>>edge;
-    for(int i=0; i<edge; i++)
+    int a , b ;
+    cin >> node >> edge ;
+    for( int i = 0 ; i < edge ; i ++ )
     {
-        cin>>a>>b;
-        adj[a].pb(b);
-        adj[b].pb(a);
+        cin >> a >> b ;
+        adj[ a ].pb( b ) ;
+        adj[ b ].pb( a ) ;
     }
 
-    for(int i=1; i<=node; i++)
+    for( int i = 1 ; i <= node ; i ++ )
     {
-        parent[i]=-1;
+        parent[ i ] = -1 ;
     }
 
-    for(int i=1; i<=node; i++)
+    for( int i = 1 ; i <= node ; i ++ )
     {
-        if(visited[i]==0)
+        if( visited[ i ] == 0 )
         {
-            FindArticulationPoint(i);
-        }
-    }
-    for(int i=1; i<=node; i++)
-    {
-        if(articulationPoint[i]==1)
-        {
-            cout<<i<<" ";
+            FindArticulationPoint( i ) ;
         }
     }
 
+    for( int i = 1 ; i <= node ; i ++ )
+    {
+        if( articulationPoint[ i ] == 1 )
+        {
+            cout << i << " " ;
+        }
+    }
 
     return 0;
 }
@@ -140,6 +139,16 @@ int main()
 6 7
 6 8
 output : 3 4 5 6
+
+
+7 7
+1 2
+1 3
+3 4
+3 7
+4 5
+4 6
+6 7
 */
 
 
