@@ -19,8 +19,10 @@ int dfs( int u, int p, int lev )
 }
 
 dfs( 1 , 0 , 0 ) ;
+level - level[ i ] ;
+number of  child -> ( finish[ i ] - start[ i ] ) / 2
 
-
+-------------------------------****** bfs ********---------------------------------------
 #include<bits/stdc++.h>
 using namespace std;
 #define           CIN              ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
