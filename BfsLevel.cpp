@@ -1,11 +1,27 @@
+--------------------------********* dfs level with number of child of each node *********----------------------------
+int cnt = 0 ;
+int start[ 200005 ] ;
+int finish[ 200005 ] ;
+int level[ 200005 ] ;
+
+int dfs( int u, int p, int lev )
+{
+    start[ u ] = ++ cnt ;
+    for( auto v : adj[ u ] )
+    {
+        if( v != p )
+        {
+            dfs( v, u, lev + 1 ) ;
+        }
+    }
+    finish[ u ] = ++ cnt ;
+    level[ u ] = lev ;
+}
+
+dfs( 1 , 0 , 0 ) ;
+
+
 #include<bits/stdc++.h>
-
-///...................................*****.................................................///
-///                  Mujahidul Islam ( mujahidulislam2923@gmail.com )                       ///
-///                  Department of Ict                                                      ///
-///                  Comilla University , Bangladesh.                                       ///
-///...................................*****.................................................///
-
 using namespace std;
 #define           CIN              ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
 #define           ll               long long int
