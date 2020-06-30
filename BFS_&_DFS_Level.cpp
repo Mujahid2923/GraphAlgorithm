@@ -1,4 +1,15 @@
 --------------------------********* dfs level with number of child of each node *********----------------------------
+level :
+-------
+void dfs( int u , int lev )
+{
+    visited[ u ] = 1 ;
+    for( auto v : adj[ u ] ) if( !visited[ v ] ) dfs( v , lev + 1 ) ;
+    level[ u ] = lev ;
+}
+
+start & Finish time :
+--------------------
 int cnt = 0 ;
 int start[ 200005 ] ;
 int finish[ 200005 ] ;
