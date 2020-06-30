@@ -1,3 +1,31 @@
+bool bfs( int s )
+{
+    queue< int > Q ;
+    Q.push( s ) ;
+    visited[ s ] = 1 ;
+
+    while( !Q.empty() )
+    {
+        int u = Q.front();
+        Q.pop() ;
+        for( auto v : adj[ u ] )
+        {
+            if( !visited[ v ] )
+            {
+                if( visited[ u ] == 1 ) visited[ v ] = 2 ;
+                else visited[ v ] = 1 ;
+                Q.push( v ) ;
+            }
+
+            if( visited[ u ] == visited[ v ] ) return false ;
+        }
+    }
+    return true;
+}
+
+
+
+
 #include<bits/stdc++.h>
 
 ///...................................*****.................................................///
