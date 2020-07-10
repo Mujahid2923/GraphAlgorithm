@@ -1,3 +1,133 @@
+----------------------------------------------------********** Directed Eular circuit *********---------------------------------------------------
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+#define          FaRaBi                 ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
+#define          ll                     long long int
+
+
+///--------------------**********----------------------------------
+
+vector < ll > v, v1, v2, v3, v4 ;
+vector < pair < char, ll > > vec1, vec2 ;
+vector < pll > vec ;
+vector < ll > adj[ 65 ] ;
+map < char, ll > Mp, Mp1, Mp2 ;
+set < ll > st, st1, st2 ;
+queue < ll > Q ;
+stack < ll > Stk ;
+multiset < ll > A, B, C, D ;
+
+
+///---------------------**********--------------------------------
+
+ll n, m ;
+ll deg[ 60 ] ;
+int visited[ 60 ] ;
+string s ;
+
+void pre()
+{
+    string str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" ;
+    for( int i = 0 ; i < str.size() ; i ++ )
+    {
+        Mp[ str[ i ] ] = i + 1 ;
+    }
+}
+
+void Reset()
+{
+    zero( deg ) ;
+    zero( visited ) ;
+    for( int i = 0 ; i < 60 ; i ++ ) adj[ i ].clear() ;
+}
+
+
+void Input()
+{
+    cin >> n  ;
+    for( int i = 0 ; i < n ; i ++ )
+    {
+        cin >> s ;
+        deg[ Mp[ s[ 0 ] ] ] ++ ;
+        deg[ Mp[ s[ 1 ] ] ] ++ ;
+    }
+    cin >> m ;
+    for( int i = 0 ; i < m ; i ++ )
+    {
+        cin >> s ;
+        adj[ Mp[ s[ 0 ] ] ].pb( Mp[ s[ 1 ] ] ) ;
+        adj[ Mp[ s[ 1 ] ] ].pb( Mp[ s[ 0 ] ] ) ;
+    }
+}
+
+
+bool dfs( int u )
+{
+    visited[ u ] = 1 ;
+    if( deg[ u ] & 1 )
+    {
+        deg[ u ] ++ ;
+        return true ;
+    }
+
+    for( auto v : adj[ u ] )
+    {
+        if( !visited[ v ] )
+        {
+            if( dfs( v ) ) return true ;
+        }
+    }
+    return false ;
+}
+
+void Calculation()
+{
+    for( int i = 0 ; i < 52 ; i ++ )
+    {
+        if( deg[ i ] & 1 )
+        {
+            zero( visited ) ;
+            deg[ i ] -- ;
+            if( !dfs( i ) )
+            {
+                no ;
+                return ;
+            }
+        }
+    }
+    yes ;
+}
+
+void solve()
+{
+    Reset() ;
+    Input() ;
+    Calculation() ;
+}
+
+int main()
+{
+    FaRaBi ;
+    pre() ;
+    int t ;
+    cin >> t ;
+    //t = 1 ;
+    while( t-- )
+    {
+        solve() ;
+    }
+    return 0 ;
+}
+
+///https://www.codechef.com/problems/CHEFPASS
+ 
+    
+    
+    ---------------------------------------------********************--------------------------------------------
+
 ///...................................*****.................................................///
 ///                  Mujahidul Islam ( mujahidulislam2923@gmail.com )                       ///
 ///                  Department of Ict                                                      ///
