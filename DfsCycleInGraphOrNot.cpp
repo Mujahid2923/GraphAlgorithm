@@ -1,8 +1,52 @@
-#include<bits/stdc++.h>
-using namespace std;
+----------------------------------- Cycle in 2D grid ---------------------------------------------------
+ void dfs( int x, int y, int par_x, int par_y , char ch )
+{
+    visited[ x ][ y ] = 1 ;
+    for( int i = 0 ; i < 4 ; i ++ )
+    {
+        int xx = x + fx[ i ] ;
+        int yy = y + fy[ i ] ;
 
-vector<int>adj[100];
-int visited[100];
+        if( xx >= 1 && xx <= row && yy >= 1 && yy <= col && s[ xx ][ yy ] == ch )
+        {
+            if( !visited[ xx ][ yy ] )
+            {
+                dfs( xx, yy, x, y, ch ) ;
+            }
+            else if( visited[ xx ][ yy ] && !( par_x == xx && par_y == yy ) )
+            {
+                ok = 1 ;
+                return ;
+            }
+        }
+
+    }
+}
+
+void Calculation()
+{
+    for( int i = 1 ; i <= row ; i ++ )
+    {
+        for( int j = 1 ; j <= col ; j ++ )
+        {
+            if( !visited[ i ][ j ] )
+            {
+                dfs( i, j, -1, -1, s[ i ][ j ] ) ;
+                if( ok )
+                {
+                    cout << "Yes" << endl ;
+                    return ;
+                }
+            }
+        }
+    }
+    cout << "No" << endl ;
+}
+
+
+--------------------------------------------------------------------------------------------------------
+
+
 int ok=0;
 
 void checkCycle(int u)
@@ -18,53 +62,9 @@ void checkCycle(int u)
         }
         else if(visited[v]==1)
         {
-            ok=1;
+            ok=1; //Cycle
             return;
         }
     }
     visited[u]=2;
 }
-
-int main()
-{
-    int node,edge;
-
-    cin>>node>>edge;
-    int a,b;
-    for(int i=0; i<edge; i++)
-    {
-        cin>>a>>b;
-        adj[a].push_back(b);
-        //adj[b].push_back(a);
-    }
-
-    for(int i=0; i<edge; i++)
-    {
-        visited[i]=0;
-    }
-
-    int s;
-    cin>>s;
-    checkCycle(s);
-    if(ok==1)
-    {
-        cout<<"Cycle"<<endl;
-    }
-    else
-    {
-        cout<<"Not Cycle"<<endl;
-    }
-    return 0;
-}
-
-/*
-5 5
-1 2
-2 3
-3 1
-3 4
-1 5
-1
-output:
-Cycle
-*/
