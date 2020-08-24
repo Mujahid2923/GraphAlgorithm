@@ -123,23 +123,15 @@ int main()
 
 
 /// https://open.kattis.com/problems/tourists
-
-vector < ll > adj[ 200005 ] ;
-
-ll n, x, y ;
+ll n, x, y, L ;
 ll level[ 200005 ] ;
 ll parent[ 200005 ] ;
 ll arr[ 200005 ][ 25 ] ;
 
-
-void Reset()
-{
-    memset( arr, -1, sizeof arr ) ;
-}
-
 void Input()
 {
     cin >> n ;
+    L = ceil( log2( n ) ) ;
     for( int i = 1 ; i < n ; i ++ )
     {
         cin >> x >> y ;
@@ -148,63 +140,50 @@ void Input()
     }
 }
 
-void dfs( int u, int p, int lev )
+void dfs( int u, int p )
 {
-    parent[ u ] = p ;
-    level[ u ] = lev ;
-    for( auto v : adj[ u ] ) if( v != p ) dfs( v, u, lev + 1 ) ;
+    arr[ u ][ 0 ] = p ;
+    level[ u ] = level[ p ] + 1 ;
+    for( int i = 1 ; i <= L ; i ++ ) arr[ u ][ i ] = arr[ arr[ u ][ i - 1 ] ][ i - 1 ] ;
+    for( auto v : adj[ u ] ) if( v != p ) dfs( v, u ) ;
 }
 
-void build()
+int up( int x, int step )
 {
-    for( int i = 1 ; i <= n ; i ++ ) arr[ i ][ 0 ] = parent[ i ] ;
-    for( int j = 1 ; ( 1 << j ) < n ; j ++ )
-    {
-        for( int i = 1 ; i <= n ; i ++ )
-        {
-            if( arr[ i ][ j - 1 ] != -1 ) arr[ i ][ j ] = arr[ arr[ i ][ j - 1 ] ][ j - 1 ] ;
-        }
-    }
+    for( int i = 0 ; i <= L ; i ++ ) if( step & ( 1 << i ) ) x = arr[ x ][ i ] ;
+    return x ;
 }
 
-int query( int p, int q )
+int lca( int p, int q )
 {
-    if( level[ q ] > level[ p ] ) swap( p, q ) ;
-    int L = 1 ;
-    while( 1 )
-    {
-        if( ( 1 << ( L + 1 ) ) > level[ p ] ) break ;
-        L ++ ;
-    }
-    for( int i = L ; i >= 0 ; i -- )
-    {
-        if( level[ p ] - ( 1 << i ) >= level[ q ] ) p = arr[ p ][ i ] ;
-    }
+    if( level[ p ] < level[ q ] ) swap( p, q ) ;
 
+    p = up( p, level[ p ] - level[ q ] ) ;
     if( p == q ) return p ;
 
     for( int i = L ; i >= 0 ; i -- )
     {
-        if( arr[ p ][ i ] != -1 && arr[ p ][ i ] != arr[ q ][ i ] )
+        if( arr[ p ][ i ] != arr[ q ][ i ] )
         {
             p = arr[ p ][ i ] ;
             q = arr[ q ][ i ] ;
         }
     }
-    return parent[ p ] ;
+    return arr[ p ][ 0 ] ;
 }
+
 void Calculation()
 {
-    dfs( 1, -1, 0 ) ;
-    build() ;
+    dfs( 1, 1 ) ;
     ll sum = 0 ;
     for( int i = 1 ; i <= n ; i ++ )
     {
         for( int j = i + i ; j <= n ; j += i )
         {
-            int par = query( i, j ) ;
+            int par = lca( i, j ) ;
             sum += level[ i ] + level[ j ] - 2 * level[ par ] + 1 ;
         }
     }
     cout << sum << endl ;
 }
+
