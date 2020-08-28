@@ -1,3 +1,58 @@
+#define          pll                    pair < ll, ll>
+#define          siz                    100005
+
+ll n, m, x, y, z ;
+ll dist[ siz ], parent[ siz ] ;
+vector < ll > adj[ siz ],cost[ 300005 ] ;
+void Reset()
+{
+    for( int i = 0 ; i < siz ; i ++ ) dist[ i ] = INT_MAX ;
+}
+
+void Input()
+{
+    scanf( "%lld %lld", &n, &m ) ;
+    for( int i = 0 ; i < m ; i ++ )
+    {
+        scanf( "%lld %lld %lld", &x, &y, &z ) ;
+        adj[ x ].pb( y ) ;
+        cost[ x ].pb( z ) ;
+    }
+}
+
+void dijkstra( int s )
+{
+    priority_queue< pll,vector< pll >,greater< pll > > PQ ;
+    PQ.push( { 0, s } ) ;
+    dist[ s ] = 0 ;
+
+    while( !PQ.empty() )
+    {
+        pll val = PQ.top() ;
+        PQ.pop() ;
+
+        int u = val.ss ;
+        for( int i = 0 ; i < adj[ u ].size() ; i ++ )
+        {
+            int v = adj[ u ][ i ] ;
+            if( dist[ u ] + cost[ u ][ i ] < dist[ v ] )
+            {
+                dist[ v ] = dist[ u ] + cost[ u ][ i ] ;
+                PQ.push( { dist[ v ], v } ) ;
+            }
+        }
+    }
+}
+
+void Calculation()
+{
+    dijkstra( 1 ) ;
+    for( int i = 1 ; i <= n ; i ++ ) cout << dist[ i ] << endl ;
+}
+
+
+-----------------------------------*****************----------------------------------
+
 #include<bits/stdc++.h>
 using namespace std;
 
