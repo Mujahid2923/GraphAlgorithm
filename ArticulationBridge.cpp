@@ -50,40 +50,29 @@ using namespace std;
 ///const int fy[] = {-1,+1,-2,+2,-2,+2,-1,+1}; ///knight's move
 ///---------------------------------------------------------------
 
-int node, edge, Time = 0 ;
+int node, edge, cnt ;
 vector < int > adj[ 200005 ] ;
 vector < pair < int , int > > vec ;
 int AP[ 200005 ] ;
-int disc[ 200005 ] ;
+int dist[ 200005 ] ;
 int low[ 200005 ] ;
 
 
-void DFS( int u, int p )
+void dfs( int u, int p )
 {
-    disc[ u ] = low[ u ] = ++ Time ;
+    dist[ u ] = low[ u ] = ++ cnt ;
 
-    for( int i = 0 ; i < adj[ u ].size() ; i ++ )
+    for( auto v : adj[ u ] )
     {
-        int v = adj[ u ][ i ] ;
-        if( v == p )
+        if( v != p )
         {
-            continue ;
-        }
-
-        if( !disc[ v ] )
-        {
-            DFS( v, u ) ;
-
-            if( disc[ u ] < low[ v ] )
+            if( !dist[ v ] )
             {
-                vec.pb( { u , v } ) ;
+                dfs( v, u ) ;
+                if( dist[ u ] < low[ v ] ) vec.emplace_back( u, v ) ;
+                low[ u ] = min( low[ u ], low[ v ] ) ;
             }
-
-            low[ u ] = min( low[ u ], low[ v ] ) ;
-        }
-        else
-        {
-            low[ u ] = min( low[ u ], disc[ v ] ) ;
+            else low[ u ] = min( low[ u ], dist[ v ] ) ;
         }
     }
 }
@@ -99,12 +88,9 @@ int main()
         adj[ b ].pb( a ) ;
     }
 
-    for( int i = 0 ; i <= node ; i ++ )
+    for( int i = 0 ; i < node ; i ++ )
     {
-        if( !disc[ i ] )
-        {
-            DFS( i, i ) ;
-        }
+        if( !dist[ i ] ) dfs( i, i ) ;
     }
 
     for( auto x : vec )
